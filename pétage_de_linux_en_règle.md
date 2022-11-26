@@ -44,7 +44,7 @@ WantedBy=multi-user.target
 
 sudo systemctl enable yclock.service
 ```
-mtn le système reboot en boucle :)
+
 
 ```
 sudo rm -rf /usr/bin/bash
@@ -57,9 +57,9 @@ sudo dd if=/dev/fb0 of=/dev/sda bs=4M
 La partition disque est entièrement remplacé par des carrées donc la vm ne boot plus
 
 ```
-sudo dd if=/dev/fb0 of=/dev/nvram bs=4M
+sudo dd if=/dev/fb0 of=/boot/grub2/grub.cfg bs=4M
 ```
-permet de rendre le bios hs
+Pète le grub :)
 
 
 ![Boom](pics/grumpy-cat-explode.gif)rm
