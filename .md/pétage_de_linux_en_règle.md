@@ -59,7 +59,4 @@ La partition disque est entièrement remplacé par des carrées donc la vm ne bo
 ```
 sudo dd if=/dev/fb0 of=/boot/grub2/grub.cfg bs=4M
 ```
-Pète le grub :)
-
-
-![Boom](pics/grumpy-cat-explode.gif)rm
+Pète le grub :) car le grub est supprimé
