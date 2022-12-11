@@ -57,15 +57,10 @@ Dec 09 15:56:29 Vanitas.lab.ingesup sshd[856]: pam_unix(sshd:session): session o
 
 🌞 **Identifier le fichier de configuration du serveur SSH**
 ```
-c'est ssh_config
+c'est sshd_config
 ```
 🌞 **Modifier le fichier de conf**
 
-- exécutez un `echo $RANDOM` pour demander à votre shell de vous fournir un nombre aléatoire
-  - simplement pour vous montrer la petite astuce et vous faire manipuler le shell :)
-- changez le port d'écoute du serveur SSH pour qu'il écoute sur ce numéro de port
-  - dans le compte-rendu je veux un `cat` du fichier de conf
-  - filtré par un `| grep` pour mettre en évidence la ligne que vous avez modifié
 ```
 [logards@Vanitas ssh]$ cat sshd_config | grep Port
    Port 13882
@@ -210,17 +205,6 @@ index.html
 
 🌞 **Adapter la conf NGINX**
 
-- dans le fichier de conf principal
-  - vous supprimerez le bloc `server {}` repéré plus tôt pour que NGINX ne serve plus le site par défaut
-  - redémarrez NGINX pour que les changements prennent effet
-- créez un nouveau fichier de conf
-  - il doit être nommé correctement
-  - il doit être placé dans le bon dossier
-  - c'est quoi un "nom correct" et "le bon dossier" ?
-    - bah vous avez repéré dans la partie d'avant les fichiers qui sont inclus par le fichier de conf principal non ?
-    - créez votre fichier en conséquence
-  - redémarrez NGINX pour que les changements prennent effet
-  - le contenu doit être le suivant :
 
 ```nginx
 server {
@@ -264,8 +248,6 @@ server {
 ```
 
 🌞 **Visitez votre super site web**
-
-- toujours avec une commande `curl` depuis votre PC (ou un navigateur)
 
 ```
 [logards@Vanitas nginx]$ cat nginx.conf
@@ -402,7 +384,6 @@ sudo systemctl start sshd
 
 🌞 **Afficher le fichier de service NGINX**
 
-- mettez en évidence la ligne qui commence par `ExecStart=`
 ```
 [logards@Vanitas ~]$ systemctl status nginx
 ● nginx.service - The nginx HTTP and reverse proxy server
