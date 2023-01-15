@@ -54,31 +54,24 @@ Here is your random cat : cat
 
 ```
 #!/bin/bash
-# 03/01/23 - logards
-# idcard de la machine 
 
-echo "Machine Name : $(hostnamectl | grep hostname| cut -d ' ' -f4)."
-echo "OS $(cat /etc/os-release | grep 'NAME=' -m1 | cut -d '"' -f2) and kernel version is $(uname -r)"
-echo "IP : $(ip a | grep enp0s8 | grep inet | tr -s ' ' | cut -d '/' -f 1 | cut -d ' ' -f 3 )"
-echo "RAM : $(free -t -h --mega | grep 'Mem' | tr -s ' ' | cut -d ' ' -f 3)  memory available on $(free -t -h --mega | grep 'Mem' | tr -s ' ' | cut -d ' ' -f 2) total memory"
-echo "DISK : $(df -h | grep root | tr -s ' ' | cut -d ' ' -f 4 ) space left"
-echo "Top 5 processes by RAM usage :"
-for i in $(seq 3 7)
-do 
-        echo "-$(ps -e -o cmd=--sort=-%mem | head -n ${i} | tail -n +${i} )"
-done
+url=$1
+web_title=$(youtube-dl -e ${1})
+directory='/srv/yt/downloads'
+cmp_directory="${directory}/${web_title}/${web_title}.mp4"
+log_yt='/var/log/yt/download.log'
+description=$(youtube-dl --get-description ${1})
+if [ ! -f ${log_yt} ] 
+then
+    echo "Error: Directory ${log_yt}  does not exists."
+    exit 1
+fi
+youtube-dl ${url} --output "${directory}/${web_title}/${web_title}.mp4" > /dev/null
+echo "${description}" > "${directory}/${web_title}/description.txt"
+echo "Video ${url} was downloaded"
+echo "File path ${cmp_directory}"
+echo "[$(date '+%D %T')] Video ${url} was downloaded. File path : ${cmp_directory}" >> ${log_yt}
 
-echo "Listening ports :"
-while read line 
-do
-        nb="$(echo $line | tr -s ' ' | cut -d ':' -f2 | cut -d ' ' -f1)"
-        protocol="$(echo $line | tr -s ' ' | cut -d ' ' -f1) "
-        type="$(echo $line | cut -d '"' -f2) "
-        echo "- $nb $protocol: $type " 
-done <<< "$(ss -4altunpH)"
-
-curl https://cataas.com/cat --output cat 2>/dev/null 
-echo "Here is your random cat : $(find cat)"
 ```
 
 ```
@@ -176,7 +169,7 @@ Jan 14 16:00:12 sakaido yt-v2.sh[658]: Video https://www.youtube.com/watch?v=Wch
 Jan 14 16:00:12 sakaido yt-v2.sh[658]: File path /srv/yt/downloads/1 Second Video/1 Second Video.mp4
 Jan 14 16:00:23 sakaido yt-v2.sh[658]: Video https://www.youtube.com/watch?v=jhFDyDgMVUI&ab_channel=WaitOneSecondHere was downloaded
 Jan 14 16:00:23 sakaido yt-v2.sh[658]: File path /srv/yt/downloads/One Second Video/One Second Video.mp4
-```é
+```
 
 
 # IV. Bonus
