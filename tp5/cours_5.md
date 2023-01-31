@@ -1220,17 +1220,12 @@ Complete!
 
 🌞 **Adapter la configuration d'Apache**
 
-- regardez la dernière ligne du fichier de conf d'Apache pour constater qu'il existe une ligne qui inclut d'autres fichiers de conf
-- créez en conséquence un fichier de configuration qui porte un nom clair et qui contient la configuration suivante :
-
 ```apache
+[logards@Nezuko ~]$ cat /etc/httpd/conf.d/apache.conf
 <VirtualHost *:80>
-  # on indique le chemin de notre webroot
   DocumentRoot /var/www/tp5_nextcloud/
-  # on précise le nom que saisissent les clients pour accéder au service
   ServerName  web.tp5.linux
 
-  # on définit des règles d'accès sur notre webroot
   <Directory /var/www/tp5_nextcloud/> 
     Require all granted
     AllowOverride All
@@ -1250,24 +1245,47 @@ Complete!
 
 ➜ **Sur votre PC**
 
-- modifiez votre fichier `hosts` (oui, celui de votre PC, de votre hôte)
-  - pour pouvoir joindre l'IP de la VM en utilisant le nom `web.tp5.linux`
-- avec un navigateur, visitez NextCloud à l'URL `http://web.tp5.linux`
-  - c'est possible grâce à la modification de votre fichier `hosts`
-- on va vous demander un utilisateur et un mot de passe pour créer un compte admin
-  - ne saisissez rien pour le moment
-- cliquez sur "Storage & Database" juste en dessous
-  - choisissez "MySQL/MariaDB"
-  - saisissez les informations pour que NextCloud puisse se connecter avec votre base
-- saisissez l'identifiant et le mot de passe admin que vous voulez, et validez l'installation
+```
+[bastien@fedora /]$ sudo vim /etc/hosts
+[bastien@fedora /]$ curl http://web.tp5.linux | head 
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0<!DOCTYPE html>
+<html class="ng-csp" data-placeholder-focus="false" lang="en" data-locale="en" >
+        <head
+ data-requesttoken="xQp+29XO9qtbwsjDL7lxCC+LaT6GnRIvZS5LAgZ3JwM=:7nsOn7eBrMoopoqPXtBDckfNA2ro7CdZC10+NTMYH2c=">
+                <meta charset="utf-8">
+                <title>
+                        Nextcloud               </title>
+                <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+                                <meta name="apple-itunes-app" content="app-id=1125420102">
+                                <meta name="theme-color" content="#0082c9">
+100  6421    0  6421    0     0   130k      0 --:--:-- --:--:-- --:--:--  130k
+curl: (23) Failed writing body
+```
 
-🌴 **C'est chez vous ici**, baladez vous un peu sur l'interface de NextCloud, faites le tour du propriétaire :)
+
 
 🌞 **Exploration de la base de données**
 
-- connectez vous en ligne de commande à la base de données après l'installation terminée
-- déterminer combien de tables ont été crées par NextCloud lors de la finalisation de l'installation
-  - ***bonus points*** si la réponse à cette question est automatiquement donnée par une requête SQL
-> Si ça marche cette commande, alors on est assurés que NextCloud pourra s'y connecter aussi. En effet, il utilisera le même user et même password, depuis la même machine.
-➜ **NextCloud est tout bo, en place, vous pouvez aller sur [la partie 4.](../part4/README.md)**
+```
+[logards@Tanjiro ~]$ sudo mysql -u root -p
+[sudo] password for logards: 
+Enter password: 
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 128
+Server version: 10.5.16-MariaDB MariaDB Server
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> SELECT count(*) AS number FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'nextcloud';
++--------+
+| number |
++--------+
+|     95 |
++--------+
+1 row in set (0.001 sec)
+```
 

@@ -738,9 +738,6 @@ logards     1681    1417  0 16:47 pts/0    00:00:00 grep --color=auto web
 }
 ```
 
-
-> N'oubliez pas d'ouvrir le port 8888 dans le firewall. Vous pouvez constater si vous le souhaitez avec un `ss` que NGINX écoute bien sur ce nouveau port.
-
 🌞 **Prouvez que les deux sites sont disponibles**
 
 ```
