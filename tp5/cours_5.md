@@ -2,13 +2,13 @@
 
 🌞 **Installer le serveur Apache**
 ```
-[logards@Nezuko ~]$ sudo dnf install httpd
+[logards@web-linux-tp5 ~]$ sudo dnf install httpd
 [sudo] password for logards: 
 Last metadata expiration check: 0:04:02 ago on Tue 17 Jan 2023 10:12:15 AM CET.
 Dependencies resolved.
-[logards@Nezuko ~]$ sudo vim /etc/httpd/conf/httpd.conf
+[logards@web-linux-tp5 ~]$ sudo vim /etc/httpd/conf/httpd.conf
 [sudo] password for logards: 
-[logards@Nezuko ~]$ cat /etc/httpd/conf/httpd.conf
+[logards@web-linux-tp5 ~]$ cat /etc/httpd/conf/httpd.conf
 
 ServerRoot "/etc/httpd"
 
@@ -106,8 +106,8 @@ IncludeOptional conf.d/*.conf
 ```
 
 ```
-[logards@Nezuko ~]$ sudo systemctl start httpd.service
-[logards@Nezuko ~]$ systemctl status httpd.service
+[logards@web-linux-tp5 ~]$ sudo systemctl start httpd.service
+[logards@web-linux-tp5 ~]$ systemctl status httpd.service
 ● httpd.service - The Apache HTTP Server
      Loaded: loaded (/usr/lib/systemd/system/httpd.service; disabled; vendor preset: disabled)
      Active: active (running) since Tue 2023-01-17 10:25:54 CET; 11s ago
@@ -124,19 +124,19 @@ IncludeOptional conf.d/*.conf
              ├─10749 /usr/sbin/httpd -DFOREGROUND
              └─10750 /usr/sbin/httpd -DFOREGROUND
 
-Jan 17 10:25:21 Nezuko systemd[1]: Starting The Apache HTTP Server...
-Jan 17 10:25:35 Nezuko httpd[10746]: AH00558: httpd: Could not reliably determine the server's fully qualified domain name, using fe80::a00:27ff:fe09:c699%enp0s3. Set the 'ServerName' directive globally to suppr>
-Jan 17 10:25:54 Nezuko systemd[1]: Started The Apache HTTP Server.
-Jan 17 10:25:54 Nezuko httpd[10746]: Server configured, listening on: port 80
-[logards@Nezuko ~]$ sudo systemctl enable httpd.service
+Jan 17 10:25:21 web-linux-tp5 systemd[1]: Starting The Apache HTTP Server...
+Jan 17 10:25:35 web-linux-tp5 httpd[10746]: AH00558: httpd: Could not reliably determine the server's fully qualified domain name, using fe80::a00:27ff:fe09:c699%enp0s3. Set the 'ServerName' directive globally to suppr>
+Jan 17 10:25:54 web-linux-tp5 systemd[1]: Started The Apache HTTP Server.
+Jan 17 10:25:54 web-linux-tp5 httpd[10746]: Server configured, listening on: port 80
+[logards@web-linux-tp5 ~]$ sudo systemctl enable httpd.service
 Created symlink /etc/systemd/system/multi-user.target.wants/httpd.service → /usr/lib/systemd/system/httpd.service.
-[logards@Nezuko ~]$ sudo ss -alutnp |grep httpd
+[logards@web-linux-tp5 ~]$ sudo ss -alutnp |grep httpd
 tcp   LISTEN 0      511                *:80              *:*    users:(("httpd",pid=10750,fd=4),("httpd",pid=10749,fd=4),("httpd",pid=10748,fd=4),("httpd",pid=10746,fd=4))
-[logards@Nezuko ~]$ sudo firewall-cmd --add-port 80/tcp --permanent
+[logards@web-linux-tp5 ~]$ sudo firewall-cmd --add-port 80/tcp --permanent
 success
-[logards@Nezuko ~]$ sudo firewall-cmd --reload
+[logards@web-linux-tp5 ~]$ sudo firewall-cmd --reload
 success
-[logards@Nezuko ~]$ sudo firewall-cmd --list-all
+[logards@web-linux-tp5 ~]$ sudo firewall-cmd --list-all
 public (active)
   target: default
   icmp-block-inversion: no
@@ -168,7 +168,7 @@ $ sudo cat /var/log/httpd/access_log
 🌞 **TEST**
 
 ```
-[logards@Nezuko ~]$ systemctl status httpd.service
+[logards@web-linux-tp5 ~]$ systemctl status httpd.service
 ● httpd.service - The Apache HTTP Server
      Loaded: loaded (/usr/lib/systemd/system/httpd.service; enabled; vendor preset: disabled)
      Active: active (running) since Tue 2023-01-17 10:25:54 CET; 4min 50s ago
@@ -185,13 +185,13 @@ $ sudo cat /var/log/httpd/access_log
              ├─10749 /usr/sbin/httpd -DFOREGROUND
              └─10750 /usr/sbin/httpd -DFOREGROUND
 
-Jan 17 10:25:21 Nezuko systemd[1]: Starting The Apache HTTP Server...
-Jan 17 10:25:35 Nezuko httpd[10746]: AH00558: httpd: Could not reliably determine the server's fully qualified domain name, using fe80::a00:27ff:fe09:c699%enp0s3. Set the 'ServerName' directive globally to suppr>
-Jan 17 10:25:54 Nezuko systemd[1]: Started The Apache HTTP Server.
-Jan 17 10:25:54 Nezuko httpd[10746]: Server configured, listening on: port 80
-[logards@Nezuko ~]$ systemctl status httpd.service | grep enabled
+Jan 17 10:25:21 web-linux-tp5 systemd[1]: Starting The Apache HTTP Server...
+Jan 17 10:25:35 web-linux-tp5 httpd[10746]: AH00558: httpd: Could not reliably determine the server's fully qualified domain name, using fe80::a00:27ff:fe09:c699%enp0s3. Set the 'ServerName' directive globally to suppr>
+Jan 17 10:25:54 web-linux-tp5 systemd[1]: Started The Apache HTTP Server.
+Jan 17 10:25:54 web-linux-tp5 httpd[10746]: Server configured, listening on: port 80
+[logards@web-linux-tp5 ~]$ systemctl status httpd.service | grep enabled
      Loaded: loaded (/usr/lib/systemd/system/httpd.service; enabled; vendor preset: disabled)
-[logards@Nezuko ~]$ curl localhost | head 
+[logards@web-linux-tp5 ~]$ curl localhost | head 
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
   0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0<!doctype html>
@@ -230,7 +230,7 @@ curl: (23) Failed writing body
 🌞 **Le service Apache...**
 
 ```
-[logards@Nezuko ~]$ cat /usr/lib/systemd/system/httpd.service
+[logards@web-linux-tp5 ~]$ cat /usr/lib/systemd/system/httpd.service
 # See httpd.service(8) for more information on using the httpd service.
 
 # Modifying this file in-place is not recommended, because changes
@@ -270,15 +270,15 @@ WantedBy=multi-user.target
 
 
 ```
-[logards@Nezuko ~]$ cat /etc/httpd/conf/httpd.conf | grep User | head -n 1
+[logards@web-linux-tp5 ~]$ cat /etc/httpd/conf/httpd.conf | grep User | head -n 1
 User apache
-[logards@Nezuko ~]$ ps -ef | grep apache
+[logards@web-linux-tp5 ~]$ ps -ef | grep apache
 apache     10747   10746  0 10:25 ?        00:00:00 /usr/sbin/httpd -DFOREGROUND
 apache     10748   10746  0 10:25 ?        00:00:00 /usr/sbin/httpd -DFOREGROUND
 apache     10749   10746  0 10:25 ?        00:00:00 /usr/sbin/httpd -DFOREGROUND
 apache     10750   10746  0 10:25 ?        00:00:00 /usr/sbin/httpd -DFOREGROUND
 logards    11078     850  0 10:42 pts/0    00:00:00 grep --color=auto apache
-[logards@Nezuko ~]$ ls -al /usr/share/testpage/
+[logards@web-linux-tp5 ~]$ ls -al /usr/share/testpage/
 total 12
 drwxr-xr-x.  2 root root   24 Jan 17 10:16 .
 drwxr-xr-x. 82 root root 4096 Jan 17 10:16 ..
@@ -287,15 +287,15 @@ drwxr-xr-x. 82 root root 4096 Jan 17 10:16 ..
 
 🌞 **Changer l'utilisateur utilisé par Apache**
 ```
-[logards@Nezuko ~]$ sudo useradd Web -d /usr/share/httpd -s /sbin/nologin
+[logards@web-linux-tp5 ~]$ sudo useradd Web -d /usr/share/httpd -s /sbin/nologin
 useradd: warning: the home directory /usr/share/httpd already exists.
 useradd: Not copying any file from skel directory into it.
-[logards@Nezuko ~]$ cat /etc/passwd | grep Web
+[logards@web-linux-tp5 ~]$ cat /etc/passwd | grep Web
 Web:x:1001:1001::/usr/share/httpd:/sbin/nologin
-[logards@Nezuko ~]$ cat /etc/httpd/conf/httpd.conf | grep Web
+[logards@web-linux-tp5 ~]$ cat /etc/httpd/conf/httpd.conf | grep Web
 User Web
-[logards@Nezuko ~]$ sudo systemctl restart httpd.service
-[logards@Nezuko ~]$ systemctl status httpd.service
+[logards@web-linux-tp5 ~]$ sudo systemctl restart httpd.service
+[logards@web-linux-tp5 ~]$ systemctl status httpd.service
 ● httpd.service - The Apache HTTP Server
      Loaded: loaded (/usr/lib/systemd/system/httpd.service; enabled; vendor preset: disabled)
      Active: active (running) since Tue 2023-01-17 10:55:59 CET; 58s ago
@@ -312,11 +312,11 @@ User Web
              ├─11141 /usr/sbin/httpd -DFOREGROUND
              └─11142 /usr/sbin/httpd -DFOREGROUND
 
-Jan 17 10:55:14 Nezuko systemd[1]: Starting The Apache HTTP Server...
-Jan 17 10:55:39 Nezuko httpd[11138]: AH00558: httpd: Could not reliably determine the server's fully qualified domain name, using fe80::a00:27ff:fe09:c699%enp0s3. Set the 'ServerName' directive globally to suppr>
-Jan 17 10:55:59 Nezuko systemd[1]: Started The Apache HTTP Server.
-Jan 17 10:55:59 Nezuko httpd[11138]: Server configured, listening on: port 80
-[logards@Nezuko ~]$ ps -ef | grep Web
+Jan 17 10:55:14 web-linux-tp5 systemd[1]: Starting The Apache HTTP Server...
+Jan 17 10:55:39 web-linux-tp5 httpd[11138]: AH00558: httpd: Could not reliably determine the server's fully qualified domain name, using fe80::a00:27ff:fe09:c699%enp0s3. Set the 'ServerName' directive globally to suppr>
+Jan 17 10:55:59 web-linux-tp5 systemd[1]: Started The Apache HTTP Server.
+Jan 17 10:55:59 web-linux-tp5 httpd[11138]: Server configured, listening on: port 80
+[logards@web-linux-tp5 ~]$ ps -ef | grep Web
 Web        11139   11138  0 10:55 ?        00:00:00 /usr/sbin/httpd -DFOREGROUND
 Web        11140   11138  0 10:55 ?        00:00:00 /usr/sbin/httpd -DFOREGROUND
 Web        11141   11138  0 10:55 ?        00:00:00 /usr/sbin/httpd -DFOREGROUND
@@ -327,17 +327,17 @@ logards    11359     850  0 10:57 pts/0    00:00:00 grep --color=auto Web
 🌞 **Faites en sorte que Apache tourne sur un autre port**
 
 ```
-[logards@Nezuko ~]$ cat /etc/httpd/conf/httpd.conf | grep Listen
+[logards@web-linux-tp5 ~]$ cat /etc/httpd/conf/httpd.conf | grep Listen
 Listen 8888
-[logards@Nezuko ~]$ sudo firewall-cmd --add-port 8888/tcp --permanent
+[logards@web-linux-tp5 ~]$ sudo firewall-cmd --add-port 8888/tcp --permanent
 success
-[logards@Nezuko ~]$ sudo firewall-cmd --reload
+[logards@web-linux-tp5 ~]$ sudo firewall-cmd --reload
 success
-[logards@Nezuko ~]$ sudo firewall-cmd --remove-port 80/tcp --permanent
+[logards@web-linux-tp5 ~]$ sudo firewall-cmd --remove-port 80/tcp --permanent
 success
-[logards@Nezuko ~]$ sudo firewall-cmd --reload
+[logards@web-linux-tp5 ~]$ sudo firewall-cmd --reload
 success
-[logards@Nezuko ~]$ sudo firewall-cmd --list-all
+[logards@web-linux-tp5 ~]$ sudo firewall-cmd --list-all
 public (active)
   target: default
   icmp-block-inversion: no
@@ -352,10 +352,10 @@ public (active)
   source-ports: 
   icmp-blocks: 
   rich rules: 
-[logards@Nezuko ~]$ sudo ss -alutnp | grep httpd
+[logards@web-linux-tp5 ~]$ sudo ss -alutnp | grep httpd
 [sudo] password for logards: 
 tcp   LISTEN 0      511                *:8888            *:*    users:(("httpd",pid=11446,fd=4),("httpd",pid=11445,fd=4),("httpd",pid=11444,fd=4),("httpd",pid=11442,fd=4))
-[logards@Nezuko ~]$ curl localhost:8888 | head 
+[logards@web-linux-tp5 ~]$ curl localhost:8888 | head 
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
 <!doctype html>    0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
@@ -381,7 +381,7 @@ curl: (23) Failed writing body
   - pareil que pour le serveur web, c'est une commande `systemctl` fiez-vous au mémo
 
 ```
-[logards@Tanjiro ~]$ sudo dnf install mariadb-server
+[logards@db-linux-tp5 ~]$ sudo dnf install mariadb-server
 [sudo] password for logards: 
 Rocky Linux 9 - BaseOS                                                                                                                                                              9.0 kB/s | 3.6 kB     00:00    
 Rocky Linux 9 - BaseOS                                                                                                                                                              2.3 MB/s | 1.7 MB     00:00    
@@ -390,12 +390,12 @@ Rocky Linux 9 - AppStream                                                       
 Rocky Linux 9 - Extras                                                                                                                                                               10 kB/s | 2.9 kB     00:00    
 Rocky Linux 9 - Extras                                                                                                                                                               23 kB/s | 8.5 kB     00:00    
 Dependencies resolved.
-[logards@Tanjiro ~]$ sudo systemctl enable mariadb
+[logards@db-linux-tp5 ~]$ sudo systemctl enable mariadb
 Created symlink /etc/systemd/system/mysql.service → /usr/lib/systemd/system/mariadb.service.
 Created symlink /etc/systemd/system/mysqld.service → /usr/lib/systemd/system/mariadb.service.
 Created symlink /etc/systemd/system/multi-user.target.wants/mariadb.service → /usr/lib/systemd/system/mariadb.service.
-[logards@Tanjiro ~]$ sudo systemctl start mariadb
-[logards@Tanjiro ~]$ sudo mysql_secure_installation
+[logards@db-linux-tp5 ~]$ sudo systemctl start mariadb
+[logards@db-linux-tp5 ~]$ sudo mysql_secure_installation
 
 NOTE: RUNNING ALL PARTS OF THIS SCRIPT IS RECOMMENDED FOR ALL MariaDB
       SERVERS IN PRODUCTION USE!  PLEASE READ EACH STEP CAREFULLY!
@@ -470,13 +470,13 @@ Thanks for using MariaDB!
 🌞 **Port utilisé par MariaDB**
 
 ```
-[logards@Tanjiro ~]$ sudo ss -alutnp | grep maria
+[logards@db-linux-tp5 ~]$ sudo ss -alutnp | grep maria
 tcp   LISTEN 0      80                 *:3306            *:*    users:(("mariadbd",pid=777,fd=19))
-[logards@Tanjiro ~]$ sudo firewall-cmd --add-port 3306/tcp --permanent
+[logards@db-linux-tp5 ~]$ sudo firewall-cmd --add-port 3306/tcp --permanent
 success
-[logards@Tanjiro ~]$ sudo firewall-cmd --reload
+[logards@db-linux-tp5 ~]$ sudo firewall-cmd --reload
 success
-[logards@Tanjiro ~]$ sudo firewall-cmd --list-all
+[logards@db-linux-tp5 ~]$ sudo firewall-cmd --list-all
 public (active)
   target: default
   icmp-block-inversion: no
@@ -496,7 +496,7 @@ public (active)
 🌞 **Processus liés à MariaDB**
 
 ```
-[logards@Tanjiro ~]$ ps -ef | grep mariadb
+[logards@db-linux-tp5 ~]$ ps -ef | grep mariadb
 mysql        777       1  0 11:42 ?        00:00:00 /usr/libexec/mariadbd --basedir=/usr
 logards     1079     949  0 11:50 pts/0    00:00:00 grep --color=auto mariadb
 ```
@@ -504,7 +504,7 @@ logards     1079     949  0 11:50 pts/0    00:00:00 grep --color=auto mariadb
 🌞 **Préparation de la base pour NextCloud**
 
 ```
-[logards@Tanjiro ~]$ sudo mysql -u root -p
+[logards@db-linux-tp5 ~]$ sudo mysql -u root -p
 [sudo] password for logards: 
 Enter password: 
 Welcome to the MariaDB monitor.  Commands end with ; or \g.
@@ -530,16 +530,8 @@ Query OK, 0 rows affected (0.001 sec)
 
 🌞 **Exploration de la base de données**
 
-- afin de tester le bon fonctionnement de la base de données, vous allez essayer de vous connecter, **comme NextCloud le fera plus tard** :
-  - depuis la machine `web.tp5.linux` vers l'IP de `db.tp5.linux`
-  - utilisez la commande `mysql` pour vous connecter à une base de données depuis la ligne de commande
-    - par exemple `mysql -u <USER> -h <IP_DATABASE> -p`
-    - si vous ne l'avez pas, installez-là
-    - vous pouvez déterminer dans quel paquet est disponible la commande `mysql` en saisissant `dnf provides mysql`
-- **donc vous devez effectuer une commande `mysql` sur `web.tp5.linux`**
-- une fois connecté à la base, utilisez les commandes SQL fournies ci-dessous pour explorer la base
 ```
-[logards@Nezuko ~]$ mysql -u nextcloud -h 10.105.1.12 -p
+[logards@web-linux-tp5 ~]$ mysql -u nextcloud -h 10.105.1.12 -p
 Enter password: 
 Welcome to the MySQL monitor.  Commands end with ; or \g.
 Your MySQL connection id is 20
@@ -588,8 +580,8 @@ MariaDB [(none)]> SELECT user FROM mysql.user;
 
 
 ```
-[logards@Nezuko ~]$ sudo dnf config-manager --set-enabled crb
-[logards@Nezuko ~]$ sudo dnf install dnf-utils http://rpms.remirepo.net/enterprise/remi-release-9.rpm -y
+[logards@web-linux-tp5 ~]$ sudo dnf config-manager --set-enabled crb
+[logards@web-linux-tp5 ~]$ sudo dnf install dnf-utils http://rpms.remirepo.net/enterprise/remi-release-9.rpm -y
 Rocky Linux 9 - BaseOS                                                                                                                                                              7.3 kB/s | 3.6 kB     00:00    
 Rocky Linux 9 - AppStream                                                                                                                                                           9.9 kB/s | 4.1 kB     00:00    
 Rocky Linux 9 - AppStream                                                                                                                                                           5.6 MB/s | 6.4 MB     00:01    
@@ -719,7 +711,7 @@ Installed:
   epel-release-9-4.el9.noarch                                        remi-release-9.1-2.el9.remi.noarch                                        yum-utils-4.1.0-3.el9.noarch                                       
 
 Complete!
-[logards@Nezuko ~]$ dnf module list php
+[logards@web-linux-tp5 ~]$ dnf module list php
 Last metadata expiration check: 0:00:08 ago on Tue 17 Jan 2023 12:36:37 PM CET.
 Rocky Linux 9 - AppStream
 Name                                       Stream                                        Profiles                                                        Summary                                                    
@@ -733,7 +725,7 @@ php                                        remi-8.1                             
 php                                        remi-8.2                                      common [d], devel, minimal                                      PHP scripting language                                     
 
 Hint: [d]efault, [e]nabled, [x]disabled, [i]nstalled
-[logards@Nezuko ~]$  sudo dnf module enable php:remi-8.1 -y
+[logards@web-linux-tp5 ~]$  sudo dnf module enable php:remi-8.1 -y
 Extra Packages for Enterprise Linux 9 - x86_64                                                                                                                                      6.1 MB/s |  13 MB     00:02    
 Remi's Modular repository for Enterprise Linux 9 - x86_64                                                                                                                           3.8 kB/s | 833  B     00:00    
 Remi's Modular repository for Enterprise Linux 9 - x86_64                                                                                                                           3.0 MB/s | 3.1 kB     00:00    
@@ -760,7 +752,7 @@ Transaction Summary
 ====================================================================================================================================================================================================================
 
 Complete!
-[logards@Nezuko ~]$ sudo dnf install -y php81-php
+[logards@web-linux-tp5 ~]$ sudo dnf install -y php81-php
 Last metadata expiration check: 0:00:31 ago on Tue 17 Jan 2023 12:37:26 PM CET.
 Dependencies resolved.
 ====================================================================================================================================================================================================================
@@ -967,7 +959,7 @@ Complete!
 🌞 **Install de tous les modules PHP nécessaires pour NextCloud**
 
 ```bash
-[logards@Nezuko ~]$ sudo dnf install -y libxml2 openssl php81-php php81-php-ctype php81-php-curl php81-php-gd php81-php-iconv php81-php-json php81-php-libxml php81-php-mbstring php81-php-openssl php81-php-posix php81-php-session php81-php-xml php81-php-zip php81-php-zlib php81-php-pdo php81-php-mysqlnd php81-php-intl php81-php-bcmath php81-php-gmp
+[logards@web-linux-tp5 ~]$ sudo dnf install -y libxml2 openssl php81-php php81-php-ctype php81-php-curl php81-php-gd php81-php-iconv php81-php-json php81-php-libxml php81-php-mbstring php81-php-openssl php81-php-posix php81-php-session php81-php-xml php81-php-zip php81-php-zlib php81-php-pdo php81-php-mysqlnd php81-php-intl php81-php-bcmath php81-php-gmp
 Last metadata expiration check: 0:02:30 ago on Tue 17 Jan 2023 12:37:26 PM CET.
 Package libxml2-2.9.13-1.el9_0.1.x86_64 is already installed.
 Package openssl-1:3.0.1-41.el9_0.x86_64 is already installed.
@@ -1201,13 +1193,13 @@ Complete!
 
 > A chaque fois que vous faites ce genre de trucs, assurez-vous que c'est bien ok. Par exemple, vérifiez avec un `ls -al` que tout appartient bien à l'utilisateur qui exécute Apache.
 ```
-[logards@Nezuko ~]$ curl https://download.nextcloud.com/server/prereleases/nextcloud-25.0.0rc3.zip --output /tmp/tp5_nextcloud
+[logards@web-linux-tp5 ~]$ curl https://download.nextcloud.com/server/prereleases/nextcloud-25.0.0rc3.zip --output /tmp/tp5_nextcloud
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
 100  168M  100  168M    0     0  11.5M      0  0:00:14  0:00:14 --:--:-- 11.0M
 
-[logards@Nezuko ~]$ sudo unzip /tmp/next_cloud -d /var/www/tp5_nextcloud/
-[logards@Nezuko ~]$ cat /var/www/tp5_nextcloud/index.html
+[logards@web-linux-tp5 ~]$ sudo unzip /tmp/next_cloud -d /var/www/tp5_nextcloud/
+[logards@web-linux-tp5 ~]$ cat /var/www/tp5_nextcloud/index.html
 <!DOCTYPE html>
 <html>
 <head>
@@ -1221,7 +1213,7 @@ Complete!
 🌞 **Adapter la configuration d'Apache**
 
 ```apache
-[logards@Nezuko ~]$ cat /etc/httpd/conf.d/apache.conf
+[logards@web-linux-tp5 ~]$ cat /etc/httpd/conf.d/apache.conf
 <VirtualHost *:80>
   DocumentRoot /var/www/tp5_nextcloud/
   ServerName  web.tp5.linux
@@ -1269,7 +1261,7 @@ curl: (23) Failed writing body
 🌞 **Exploration de la base de données**
 
 ```
-[logards@Tanjiro ~]$ sudo mysql -u root -p
+[logards@db-linux-tp5 ~]$ sudo mysql -u root -p
 [sudo] password for logards: 
 Enter password: 
 Welcome to the MariaDB monitor.  Commands end with ; or \g.
